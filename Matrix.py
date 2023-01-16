@@ -47,9 +47,10 @@ class PackedMatrix:
         for i, (r, c) in enumerate(self.packed_matrix):
             if r == 0 and c == column:
                 find_column = True
+            elif r == 0 and find_column:
+                return 0
             if r == row and find_column:
                 return self.packed_matrix[i][1]
-        return 0
 
     def export_packed_matrix_to_file(self, file_path):
         """Exports the packed matrix to a text file."""

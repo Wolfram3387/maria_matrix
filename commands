@@ -2,3 +2,5 @@ pyuic5 C:\Users\wolfr\PycharmProjects\maria_matrix\designs\AddWindow.ui -o C:\Us
 pyuic5 C:\Users\wolfr\PycharmProjects\maria_matrix\designs\DeleteWindow.ui -o C:\Users\wolfr\PycharmProjects\maria_matrix\designs\DeleteWindow.py
 pyuic5 C:\Users\wolfr\PycharmProjects\maria_matrix\designs\FindWindow.ui -o C:\Users\wolfr\PycharmProjects\maria_matrix\designs\FindWindow.py
 pyuic5 C:\Users\wolfr\PycharmProjects\maria_matrix\designs\MainWindow.ui -o C:\Users\wolfr\PycharmProjects\maria_matrix\designs\MainWindow.py
+
+этот файл можно удалить

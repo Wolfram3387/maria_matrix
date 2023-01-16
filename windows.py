@@ -88,7 +88,7 @@ class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MainWindow):
             return
 
         # записываем данные упакованной матрицы в файл, выбранный пользователем
-        file_path, _ = QtWidgets.QFileDialog.getSaveFileName(self, 'Open file', '/packed_matrix', '.txt')
+        file_path, _ = QtWidgets.QFileDialog.getSaveFileName(self, 'Open file', 'packed_matrix.txt', '.txt')
         if file_path:
             matrix.export_packed_matrix_to_file(file_path=file_path)
 
@@ -104,14 +104,11 @@ class FindWindow(QtWidgets.QMainWindow, designs.FindWindow.Ui_FindWindow):
         self.pushButton_find.clicked.connect(self.btn_find_clicked)
 
     def btn_find_clicked(self):
-        row = self.lineEdit_row.text()
-        column = self.lineEdit_column.text()
-
         # TODO валидация данных
+        row = int(self.lineEdit_row.text())
+        column = int(self.lineEdit_column.text())
 
-        # TODO найти элемент a[row, column] в матрице
         element = matrix.find_element_in_packed_matrix(row, column)
-
         warning(text=f'A[{row}][{column}] = {element}', title='Поиск элемента', icon=QMessageBox.Information)
 
 
@@ -122,16 +119,17 @@ class AddWindow(QtWidgets.QMainWindow, designs.AddWindow.Ui_MainWindow):
         self.pushButton_add.clicked.connect(self.btn_add_clicked)
 
     def btn_add_clicked(self):
-        row = self.lineEdit_row.text()
-        column = self.lineEdit_column.text()
-        element = self.lineEdit_element.text()
-
         # TODO валидация данных
+        row = int(self.lineEdit_row.text())
+        column = int(self.lineEdit_column.text())
+        element = int(self.lineEdit_element.text())
+
 
         # добавить element в матрицу
         matrix.add_element_to_packed_matrix(row, column, element)
 
         # TODO обновить TableWidget
+        self.close()
 
 
 class DeleteWindow(QtWidgets.QMainWindow, designs.DeleteWindow.Ui_DeleteWindow):
@@ -142,11 +140,11 @@ class DeleteWindow(QtWidgets.QMainWindow, designs.DeleteWindow.Ui_DeleteWindow):
         self.pushButton_delete.clicked.connect(self.btn_delete_clicked)
 
     def btn_delete_clicked(self):
-        row = self.lineEdit_row.text()
-        column = self.lineEdit_column.text()
-
         # TODO валидация данных
+        row = int(self.lineEdit_row.text())
+        column = int(self.lineEdit_column.text())
 
         matrix.remove_element_from_packed_matrix(row, column)
 
         # TODO обновить TableWidget
+        self.close()
