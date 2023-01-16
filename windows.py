@@ -1,11 +1,10 @@
 from typing import Type
 
-
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QWidget, QGridLayout
 
 import designs
-from Matrix import PackedMatrix, matrix
+from Matrix import matrix, PackedMatrix
 
 
 class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MatrixPacking):
@@ -35,10 +34,21 @@ class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MatrixPacking):
         if file:
             matrix.read_matrix_from_file(file)
             # TODO обновить TableWidget
-            array = matrix.unpack_matrix()
-            for i in range(len(array)):
-                for j in range(len(array)):
-                    self.tableWidget.setItem(i, j, array[i][j])
+            self.update_table(matrix)
+    def update_table(self, matrix: Type[PackedMatrix]):
+        array = matrix.unpack_matrix()
+        self.tableWidget.setColumnCount(matrix.rank)
+        self.tableWidget.setRowCount(matrix.rank)
+        self.tableWidget.setHorizontalHeaderLabels(list(map(str, range(1, matrix.rank + 1))))
+        self.tableWidget.setVerticalHeaderLabels(list(map(str, range(1, matrix.rank + 1))))
+        cell_size = self.tableWidget.geometry().width() // matrix.rank
+        self.tableWidget.setColumnWidth(cell_size, cell_size)
+        self.tableWidget.setRowHeight(cell_size, cell_size)
+        for i in range(matrix.rank):
+            for j in range(matrix.rank):
+                self.tableWidget.setItem(i, j, QTableWidgetItem(str(array[i][j])))
+
+        self.tableWidget.resizeColumnsToContents()
 
     def btn_find_clicked(self):
         self.find_window = FindWindow()
@@ -77,8 +87,8 @@ class FindWindow(QtWidgets.QMainWindow, designs.FindWindow.Ui_Dialog):
         self.pushButton_find.clicked.connect(self.btn_find_clicked)
 
     def btn_find_clicked(self):
-        row = self.lineEdit_row.toPlainText()
-        column = self.lineEdit_2.toPlainText()
+        row = self.lineEdit_row.text()
+        column = self.lineEdit_2.text()
 
         # TODO валидация данных
 

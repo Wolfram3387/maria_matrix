@@ -48,7 +48,7 @@ class PackedMatrix:
             if r == 0 and c == column:
                 find_column = True
             if r == row and find_column:
-                return self.packed_matrix[i]
+                return self.packed_matrix[i][1]
         return 0
 
     def export_packed_matrix_to_file(self, file_path):
