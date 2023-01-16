@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\wolfr\PycharmProjects\Maria\designs\FindWindow.ui'
+# Form implementation generated from reading ui file 'C:\Users\wolfr\PycharmProjects\maria_matrix\designs\FindWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
 #
@@ -11,61 +11,62 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(219, 160)
-        Dialog.setMinimumSize(QtCore.QSize(216, 160))
-        Dialog.setMaximumSize(QtCore.QSize(400, 295))
-        Dialog.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(9, 9, 167, 142))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+class Ui_FindWindow(object):
+    def setupUi(self, FindWindow):
+        FindWindow.setObjectName("FindWindow")
+        FindWindow.resize(217, 160)
+        FindWindow.setMinimumSize(QtCore.QSize(138, 160))
+        FindWindow.setMaximumSize(QtCore.QSize(400, 200))
+        self.centralwidget = QtWidgets.QWidget(FindWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label.setFont(font)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
-        self.lineEdit_row = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_row = QtWidgets.QLineEdit(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lineEdit_row.setFont(font)
         self.lineEdit_row.setInputMethodHints(QtCore.Qt.ImhDigitsOnly)
         self.lineEdit_row.setObjectName("lineEdit_row")
         self.verticalLayout.addWidget(self.lineEdit_row)
-        self.label_2 = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label_2.setFont(font)
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_column = QtWidgets.QLineEdit(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.lineEdit_2.setFont(font)
-        self.lineEdit_2.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.lineEdit_2.setInputMethodHints(QtCore.Qt.ImhDigitsOnly)
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.verticalLayout.addWidget(self.lineEdit_2)
-        self.pushButton_find = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.lineEdit_column.setFont(font)
+        self.lineEdit_column.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.lineEdit_column.setInputMethodHints(QtCore.Qt.ImhDigitsOnly)
+        self.lineEdit_column.setObjectName("lineEdit_column")
+        self.verticalLayout.addWidget(self.lineEdit_column)
+        self.pushButton_find = QtWidgets.QPushButton(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.pushButton_find.setFont(font)
         self.pushButton_find.setObjectName("pushButton_find")
         self.verticalLayout.addWidget(self.pushButton_find)
+        self.verticalLayout_2.addLayout(self.verticalLayout)
+        FindWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(FindWindow)
+        QtCore.QMetaObject.connectSlotsByName(FindWindow)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, FindWindow):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label.setText(_translate("Dialog", "Номер строки:"))
-        self.label_2.setText(_translate("Dialog", "Номер столбца:"))
-        self.pushButton_find.setText(_translate("Dialog", "Найти элемент"))
+        FindWindow.setWindowTitle(_translate("FindWindow", "MainWindow"))
+        self.label.setText(_translate("FindWindow", "Номер строки:"))
+        self.label_2.setText(_translate("FindWindow", "Номер столбца:"))
+        self.pushButton_find.setText(_translate("FindWindow", "Найти элемент"))

@@ -71,12 +71,16 @@ class PackedMatrix:
 
     def read_matrix_from_file(self, file_path):
         """Reads a square matrix from a text file"""
-
         if not os.path.isfile(file_path):
-            raise FileNotFoundError(f"File not found: {file_path}")
+            raise FileNotFoundError(f"Файл не найден: {file_path}")
+
+        if not file_path.endswith('.txt'):
+            raise NameError(f'Файл должен быть с расширением .txt')
 
         with open(file_path) as file:
             array = file.readlines()
+            if not array:
+                raise NotImplementedError('Файл не должен быть пустой')
 
         matrix = self._read_matrix_from_array(array)
         self.pack_matrix(matrix)
@@ -88,12 +92,12 @@ class PackedMatrix:
         for i in range(self.rank):
             line = strings_array[i].split(';')
             if len(line) != self.rank:
-                raise ValueError("Matrix is not rectangular, please check the file.")
+                raise ValueError("Матрица не квадратная, проверьте файл.")
             for j in range(self.rank):
                 try:
                     int(line[j])
                 except ValueError:
-                    raise ValueError(f"Invalid character {line[j]} found in {line}, please check the file.")
+                    raise ValueError(f"Некоррекнтный символ '{line[j]}' найден в строке {i+1}, проверьте файл.")
                 matrix[i][j] = int(line[j])
         return matrix
 

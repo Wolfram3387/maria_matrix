@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\wolfr\PycharmProjects\Maria\designs\DeleteWindow.ui'
+# Form implementation generated from reading ui file 'C:\Users\wolfr\PycharmProjects\maria_matrix\designs\DeleteWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
 #
@@ -11,59 +11,62 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(218, 160)
-        Dialog.setMinimumSize(QtCore.QSize(216, 160))
-        Dialog.setMaximumSize(QtCore.QSize(400, 295))
-        self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(9, 9, 167, 142))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+class Ui_DeleteWindow(object):
+    def setupUi(self, DeleteWindow):
+        DeleteWindow.setObjectName("DeleteWindow")
+        DeleteWindow.resize(214, 160)
+        DeleteWindow.setMinimumSize(QtCore.QSize(151, 160))
+        DeleteWindow.setMaximumSize(QtCore.QSize(400, 200))
+        self.centralwidget = QtWidgets.QWidget(DeleteWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label.setFont(font)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
-        self.lineEdit_row = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_row = QtWidgets.QLineEdit(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lineEdit_row.setFont(font)
+        self.lineEdit_row.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.lineEdit_row.setInputMethodHints(QtCore.Qt.ImhDigitsOnly)
         self.lineEdit_row.setObjectName("lineEdit_row")
         self.verticalLayout.addWidget(self.lineEdit_row)
-        self.label_2 = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label_2.setFont(font)
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
-        self.lineEdit = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_column = QtWidgets.QLineEdit(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.lineEdit.setFont(font)
-        self.lineEdit.setInputMethodHints(QtCore.Qt.ImhDigitsOnly)
-        self.lineEdit.setObjectName("lineEdit")
-        self.verticalLayout.addWidget(self.lineEdit)
-        self.pushButton_delete = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.lineEdit_column.setFont(font)
+        self.lineEdit_column.setInputMethodHints(QtCore.Qt.ImhDigitsOnly)
+        self.lineEdit_column.setObjectName("lineEdit_column")
+        self.verticalLayout.addWidget(self.lineEdit_column)
+        self.pushButton_delete = QtWidgets.QPushButton(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.pushButton_delete.setFont(font)
         self.pushButton_delete.setObjectName("pushButton_delete")
         self.verticalLayout.addWidget(self.pushButton_delete)
+        self.verticalLayout_2.addLayout(self.verticalLayout)
+        DeleteWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(DeleteWindow)
+        QtCore.QMetaObject.connectSlotsByName(DeleteWindow)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, DeleteWindow):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label.setText(_translate("Dialog", "Номер строки:"))
-        self.label_2.setText(_translate("Dialog", "Номер столбца:"))
-        self.pushButton_delete.setText(_translate("Dialog", "Удалить элемент"))
+        DeleteWindow.setWindowTitle(_translate("DeleteWindow", "MainWindow"))
+        self.label.setText(_translate("DeleteWindow", "Номер строки:"))
+        self.label_2.setText(_translate("DeleteWindow", "Номер столбца:"))
+        self.pushButton_delete.setText(_translate("DeleteWindow", "Удалить элемент"))

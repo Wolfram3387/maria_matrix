@@ -1,18 +1,24 @@
-from typing import Type
-
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QWidget, QGridLayout
+from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
 
 import designs
 from Matrix import matrix, PackedMatrix
 
 
-class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MatrixPacking):
+def warning(text, title='Предупреждение', icon=QMessageBox.Warning, button=QMessageBox.Ok):
+    msg = QMessageBox()
+    msg.setText(text)
+    msg.setIcon(icon)
+    msg.setWindowTitle(title)
+    msg.setStandardButtons(button)
+    msg.exec_()
+
+
+class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.adjustSize()
 
         self.delete_window = None
         self.add_window = None
@@ -33,10 +39,14 @@ class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MatrixPacking):
             'txt Files (*.txt);;Text Files (*.txt)'
         )
         if file:
-            matrix.read_matrix_from_file(file)
-            # TODO обновить TableWidget
+            try:
+                matrix.read_matrix_from_file(file)
+            except (FileNotFoundError, ValueError, NameError, NotImplementedError) as error:
+                warning(text=error.args[0])
+                return
             self.update_table(matrix)
-    def update_table(self, matrix: Type[PackedMatrix]):
+
+    def update_table(self, matrix: PackedMatrix):
         array = matrix.unpack_matrix()
         self.tableWidget.setColumnCount(matrix.rank)
         self.tableWidget.setRowCount(matrix.rank)
@@ -52,80 +62,79 @@ class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MatrixPacking):
         self.tableWidget.resizeColumnsToContents()
 
     def btn_find_clicked(self):
+        if not matrix.packed_matrix:
+            warning(text='Матрица не загружена. Загрузите матрицу')
+            return
         self.find_window = FindWindow()
         self.find_window.show()
 
     def btn_add_clicked(self):
+        if not matrix.packed_matrix:
+            warning(text='Матрица не загружена. Загрузите матрицу')
+            return
         self.add_window = AddWindow()
         self.add_window.show()
 
     def btn_delete_clicked(self):
+        if not matrix.packed_matrix:
+            warning(text='Матрица не загружена. Загрузите матрицу')
+            return
         self.delete_window = DeleteWindow()
         self.delete_window.show()
 
     def btn_export_clicked(self):
+        if not matrix.packed_matrix:
+            warning(text='Матрица не загружена. Загрузите матрицу')
+            return
+
         # записываем данные упакованной матрицы в файл, выбранный пользователем
         file_path, _ = QtWidgets.QFileDialog.getSaveFileName(self, 'Open file', '/packed_matrix', '.txt')
         if file_path:
             matrix.export_packed_matrix_to_file(file_path=file_path)
 
-
     @staticmethod
     def btn_author_clicked():
-        about_window = QMessageBox()
-        about_window.setText('Автор программы: Мария')
-        about_window.setIcon(QMessageBox.Information)
-        about_window.setWindowTitle('Авторство')
-        about_window.setStandardButtons(QMessageBox.Ok)
-        about_window.exec_()
+        warning(text='Автор программы: Мария', title='Авторство', icon=QMessageBox.Information)
 
 
-class FindWindow(QtWidgets.QMainWindow, designs.FindWindow.Ui_Dialog):
+class FindWindow(QtWidgets.QMainWindow, designs.FindWindow.Ui_FindWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-
         self.pushButton_find.clicked.connect(self.btn_find_clicked)
 
     def btn_find_clicked(self):
         row = self.lineEdit_row.text()
-        column = self.lineEdit_2.text()
+        column = self.lineEdit_column.text()
 
         # TODO валидация данных
 
         # TODO найти элемент a[row, column] в матрице
         element = matrix.find_element_in_packed_matrix(row, column)
 
-        # показать окно с этим элементом
-        element_window = QMessageBox()
-        element_window.setText(f'A[{row}][{column}] = {element}')
-        element_window.setIcon(QMessageBox.Information)
-        element_window.setWindowTitle('Найти элемент')
-        element_window.setStandardButtons(QMessageBox.Ok)
-        element_window.exec_()
+        warning(text=f'A[{row}][{column}] = {element}', title='Поиск элемента', icon=QMessageBox.Information)
 
 
-class AddWindow(QtWidgets.QMainWindow, designs.AddWindow.Ui_Dialog):
+class AddWindow(QtWidgets.QMainWindow, designs.AddWindow.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-
         self.pushButton_add.clicked.connect(self.btn_add_clicked)
 
     def btn_add_clicked(self):
-        row = self.lineEdit_row.toPlainText()
-        column = self.lineEdit_column.toPlainText()
-        element = self.lineEdit_element.toPlainText()
+        row = self.lineEdit_row.text()
+        column = self.lineEdit_column.text()
+        element = self.lineEdit_element.text()
 
         # TODO валидация данных
 
         # добавить element в матрицу
         matrix.add_element_to_packed_matrix(row, column, element)
 
-        # TODO обновить TableView
+        # TODO обновить TableWidget
 
 
-class DeleteWindow(QtWidgets.QMainWindow, designs.DeleteWindow.Ui_Dialog):
+class DeleteWindow(QtWidgets.QMainWindow, designs.DeleteWindow.Ui_DeleteWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -133,12 +142,11 @@ class DeleteWindow(QtWidgets.QMainWindow, designs.DeleteWindow.Ui_Dialog):
         self.pushButton_delete.clicked.connect(self.btn_delete_clicked)
 
     def btn_delete_clicked(self):
-        row = self.lineEdit_row.toPlainText()
-        column = self.lineEdit.toPlainText()
+        row = self.lineEdit_row.text()
+        column = self.lineEdit_column.text()
 
         # TODO валидация данных
 
-        # TODO удалить элемент a[row, column] из матрицы
         matrix.remove_element_from_packed_matrix(row, column)
 
-        # TODO обновить TableView
+        # TODO обновить TableWidget

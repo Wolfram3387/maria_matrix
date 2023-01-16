@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\wolfr\PycharmProjects\Maria\designs\AddWindow.ui'
+# Form implementation generated from reading ui file 'C:\Users\wolfr\PycharmProjects\maria_matrix\designs\AddWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
 #
@@ -11,26 +11,26 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(219, 216)
-        Dialog.setMinimumSize(QtCore.QSize(219, 216))
-        Dialog.setMaximumSize(QtCore.QSize(400, 400))
-        self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(9, 9, 167, 198))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(219, 216)
+        MainWindow.setMinimumSize(QtCore.QSize(169, 216))
+        MainWindow.setMaximumSize(QtCore.QSize(400, 300))
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label.setFont(font)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
-        self.lineEdit_row = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_row = QtWidgets.QLineEdit(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lineEdit_row.setFont(font)
@@ -38,14 +38,14 @@ class Ui_Dialog(object):
         self.lineEdit_row.setMaxLength(20)
         self.lineEdit_row.setObjectName("lineEdit_row")
         self.verticalLayout.addWidget(self.lineEdit_row)
-        self.label_2 = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label_2.setFont(font)
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
-        self.lineEdit_column = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_column = QtWidgets.QLineEdit(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lineEdit_column.setFont(font)
@@ -53,7 +53,7 @@ class Ui_Dialog(object):
         self.lineEdit_column.setMaxLength(20)
         self.lineEdit_column.setObjectName("lineEdit_column")
         self.verticalLayout.addWidget(self.lineEdit_column)
-        self.label_3 = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label_3.setFont(font)
@@ -61,7 +61,7 @@ class Ui_Dialog(object):
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
-        self.lineEdit_element = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit_element = QtWidgets.QLineEdit(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lineEdit_element.setFont(font)
@@ -69,20 +69,22 @@ class Ui_Dialog(object):
         self.lineEdit_element.setMaxLength(20)
         self.lineEdit_element.setObjectName("lineEdit_element")
         self.verticalLayout.addWidget(self.lineEdit_element)
-        self.pushButton_add = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.pushButton_add = QtWidgets.QPushButton(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.pushButton_add.setFont(font)
         self.pushButton_add.setObjectName("pushButton_add")
         self.verticalLayout.addWidget(self.pushButton_add)
+        self.horizontalLayout.addLayout(self.verticalLayout)
+        MainWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label.setText(_translate("Dialog", "Номер строки:"))
-        self.label_2.setText(_translate("Dialog", "Номер столбца:"))
-        self.label_3.setText(_translate("Dialog", "Значение элемента:"))
-        self.pushButton_add.setText(_translate("Dialog", "Добавить элемент"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "Номер строки:"))
+        self.label_2.setText(_translate("MainWindow", "Номер столбца:"))
+        self.label_3.setText(_translate("MainWindow", "Значение элемента:"))
+        self.pushButton_add.setText(_translate("MainWindow", "Добавить элемент"))
