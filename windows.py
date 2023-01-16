@@ -12,6 +12,7 @@ class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MatrixPacking):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.adjustSize()
 
         self.delete_window = None
         self.add_window = None
