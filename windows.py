@@ -23,6 +23,7 @@ class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MainWindow):
         self.delete_window = None
         self.add_window = None
         self.find_window = None
+        self.table_is_filled = False
 
         self.pushButton_load.clicked.connect(self.btn_load_clicked)
         self.pushButton_find.clicked.connect(self.btn_find_clicked)
@@ -30,6 +31,27 @@ class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MainWindow):
         self.pushButton_delete.clicked.connect(self.btn_delete_clicked)
         self.pushButton_export.clicked.connect(self.btn_export_clicked)
         self.pushButton_author.clicked.connect(self.btn_author_clicked)
+        self.tableWidget.cellChanged.connect(self.cell_changed)
+
+    def resizeEvent(self, event):
+        if matrix.packed_matrix:
+            self.update_table(matrix)
+
+    def cell_changed(self):
+        if not self.table_is_filled:
+            return
+        row = int(self.tableWidget.currentRow()) + 1
+        column = int(self.tableWidget.currentColumn()) + 1
+        if row == 0 and column == 0:  # этот условие выхода необходимо для изменения окна без ошибок
+            return
+        element = self.tableWidget.item(row-1, column-1).text()
+        try:
+            element = int(element)
+        except ValueError:
+            self.tableWidget.setItem(row-1, column-1, QTableWidgetItem('0'))
+            return
+        if element:
+            matrix.add_element_to_packed_matrix(row, column, element)
 
     def btn_load_clicked(self):
         file, _ = QtWidgets.QFileDialog.getOpenFileName(
@@ -52,14 +74,15 @@ class MainWindow(QtWidgets.QMainWindow, designs.MainWindow.Ui_MainWindow):
         self.tableWidget.setRowCount(matrix.rank)
         self.tableWidget.setHorizontalHeaderLabels(list(map(str, range(1, matrix.rank + 1))))
         self.tableWidget.setVerticalHeaderLabels(list(map(str, range(1, matrix.rank + 1))))
-        cell_size = self.tableWidget.geometry().width() // matrix.rank
-        self.tableWidget.setColumnWidth(cell_size, cell_size)
-        self.tableWidget.setRowHeight(cell_size, cell_size)
         for i in range(matrix.rank):
             for j in range(matrix.rank):
                 self.tableWidget.setItem(i, j, QTableWidgetItem(str(array[i][j])))
-
-        self.tableWidget.resizeColumnsToContents()
+        column_size = self.tableWidget.width() // self.tableWidget.columnCount() - 5
+        row_size = self.tableWidget.height() // self.tableWidget.rowCount() - 5
+        for i in range(matrix.rank):
+            self.tableWidget.setColumnWidth(i, column_size)
+            self.tableWidget.setRowHeight(i, row_size)
+        self.table_is_filled = True
 
     def btn_find_clicked(self):
         if not matrix.packed_matrix:
@@ -104,9 +127,16 @@ class FindWindow(QtWidgets.QMainWindow, designs.FindWindow.Ui_FindWindow):
         self.pushButton_find.clicked.connect(self.btn_find_clicked)
 
     def btn_find_clicked(self):
-        # TODO валидация данных
-        row = int(self.lineEdit_row.text())
-        column = int(self.lineEdit_column.text())
+        try:
+            row = int(self.lineEdit_row.text())
+            column = int(self.lineEdit_column.text())
+            assert 1 <= row <= matrix.rank and 1 <= column <= matrix.rank
+        except ValueError:
+            warning(text='Введите число', icon=QMessageBox.Warning)
+            return
+        except AssertionError:
+            warning(text='Некорректный индекс для столбца или строки', icon=QMessageBox.Warning)
+            return
 
         element = matrix.find_element_in_packed_matrix(row, column)
         warning(text=f'A[{row}][{column}] = {element}', title='Поиск элемента', icon=QMessageBox.Information)
@@ -119,16 +149,20 @@ class AddWindow(QtWidgets.QMainWindow, designs.AddWindow.Ui_MainWindow):
         self.pushButton_add.clicked.connect(self.btn_add_clicked)
 
     def btn_add_clicked(self):
-        # TODO валидация данных
-        row = int(self.lineEdit_row.text())
-        column = int(self.lineEdit_column.text())
-        element = int(self.lineEdit_element.text())
+        try:
+            row = int(self.lineEdit_row.text())
+            column = int(self.lineEdit_column.text())
+            element = int(self.lineEdit_element.text())
+            assert 1 <= row <= matrix.rank and 1 <= column <= matrix.rank
+        except ValueError:
+            warning(text='Введите число', icon=QMessageBox.Warning)
+            return
+        except AssertionError:
+            warning(text='Некорректный индекс для столбца или строки', icon=QMessageBox.Warning)
+            return
 
-
-        # добавить element в матрицу
         matrix.add_element_to_packed_matrix(row, column, element)
-
-        # TODO обновить TableWidget
+        main_window.update_table(matrix)
         self.close()
 
 
@@ -140,11 +174,20 @@ class DeleteWindow(QtWidgets.QMainWindow, designs.DeleteWindow.Ui_DeleteWindow):
         self.pushButton_delete.clicked.connect(self.btn_delete_clicked)
 
     def btn_delete_clicked(self):
-        # TODO валидация данных
-        row = int(self.lineEdit_row.text())
-        column = int(self.lineEdit_column.text())
+        try:
+            row = int(self.lineEdit_row.text())
+            column = int(self.lineEdit_column.text())
+            assert 1 <= row <= matrix.rank and 1 <= column <= matrix.rank
+        except ValueError:
+            warning(text='Введите число', icon=QMessageBox.Warning)
+            return
+        except AssertionError:
+            warning(text='Некорректный индекс для столбца или строки', icon=QMessageBox.Warning)
+            return
 
         matrix.remove_element_from_packed_matrix(row, column)
-
-        # TODO обновить TableWidget
+        main_window.update_table(matrix)
         self.close()
+
+
+main_window = MainWindow()

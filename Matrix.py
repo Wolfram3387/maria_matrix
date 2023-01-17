@@ -87,7 +87,6 @@ class PackedMatrix:
         self.pack_matrix(matrix)
 
     def _read_matrix_from_array(self, strings_array):
-
         self.rank = len(strings_array)
         matrix = [[0 for _ in range(self.rank)] for _ in range(self.rank)]
         for i in range(self.rank):
